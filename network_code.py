@@ -23,8 +23,8 @@ group_id = int(st.text_input('请输入要查询的团体id', '7'))
 @st.cache_data
 def load_data():
     try:
-        author_info_df = pd.read_feather('作者明细-包含团体id.fth')
-        data_use_df = pd.read_feather('作者网络明细回查表11.2.fth')
+        author_info_df = pd.read_feather('暑期作者信息.fth')
+        data_use_df = pd.read_feather('暑期互动明细.fth')
 
     except FileNotFoundError as e:
         st.error(f"文件未找到: {e}")
@@ -123,7 +123,7 @@ if st.button('生成关系网络图'):
     st.write(f'Generating chart for group ID: {group_id} and graph: {selected_graph}')
     plot_local_group_graph(graph_options[selected_graph], node_df, selected_graph, edge_width_scale=0.2)
 def data_info(group_id,selected_graph, data_use, author_info):
-    node_df = author_info[author_info['group'] == group_id][['作者id']]
+    node_df = author_info[author_info['团体id'] == group_id][['作者id']]
     temp_data = data_use[(data_use['t1.source_user_id'].isin(node_df['作者id'].tolist()))&(data_use['t1.target_user_id'].isin(node_df['作者id'].tolist()))]
     if selected_graph == '综合指标关系网':
         temp_data = temp_data[['t1.source_user_id','t1.target_user_id','source_author_name','target_author_name',
