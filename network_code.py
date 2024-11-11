@@ -58,8 +58,8 @@ node_df = author_info[author_info['团体id'] == group_id][['作者id', '作者�
 def plot_local_group_graph(G, node_df, title, edge_width_scale=1.0, figsize=(15, 10)):
     node_ids = list(node_df['作者id'])
     node_dict = dict(zip(node_df['作者id'], node_df['作者昵称']))
-    session_data = author_info[author_info['作者id'].isin(node_df['作者id'].tolist())][['作者id','30d日均23-总打开理由']]
-    session_dict = dict(zip(session_data['作者id'],session_data['30d日均23-总打开理由']))
+    session_data = author_info[author_info['作者id'].isin(node_df['作者id'].tolist())][['作者id','30d 23-总打开理由']]
+    session_dict = dict(zip(session_data['作者id'],session_data['30d 23-总打开理由']))
     for node_id, node_name in node_dict.items():
         G.nodes[node_id]['name'] = node_name
     for node_id, node_value in session_dict.items():
@@ -81,7 +81,7 @@ def plot_local_group_graph(G, node_df, title, edge_width_scale=1.0, figsize=(15,
     edge_colors = [mappable.to_rgba(w) for w in weights]
     edge_widths = [w * 0.2 for w in weights]  # 调整线宽
     pos = nx.spring_layout(subgraph, k = 5) ## k的大小用来调节节点之间的散布状况。
-    node_sizes = [subgraph.nodes[node]['value'] * 0.1 for node in subgraph.nodes()]
+    node_sizes = [subgraph.nodes[node]['value'] * 0.1/30 for node in subgraph.nodes()]
     nx.draw_networkx_nodes(subgraph, pos, node_size=node_sizes, node_color='skyblue', ax=ax)
     nx.draw_networkx_edges(subgraph, pos, width=edge_widths, alpha=0.7, edge_color=edge_colors, ax=ax)
     # 标签绘制，更改为节点大小为打开理由绝对值规模
