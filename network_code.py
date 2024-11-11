@@ -53,7 +53,7 @@ def load_graph():
     return G_all, G_live_cnt, G_comment_cnt, G_live_play_cnt, G_send_message_cnt, G_co_relation_num, G_comments_at_author, G_common_hard_fans_cnt
 G_all, G_live_cnt, G_comment_cnt, G_live_play_cnt, G_send_message_cnt, G_co_relation_num, G_comments_at_author, G_common_hard_fans_cnt = load_graph()
 # 获取节点数据，根据用户输入的团体id
-node_df = author_info[author_info['group'] == group_id][['作者id', '作者昵称']]
+node_df = author_info[author_info['团体id'] == group_id][['作者id', '作者昵称']]
 # 绘制局部网络图
 def plot_local_group_graph(G, node_df, title, edge_width_scale=1.0, figsize=(15, 10)):
     node_ids = list(node_df['作者id'])
